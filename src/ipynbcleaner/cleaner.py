@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """Core notebook cleaning utilities."""
 
 from __future__ import annotations
@@ -117,3 +118,62 @@ def clean_notebook_file(
 
     cleaned = clean_notebook(load_notebook(input_file), config)
     return save_notebook(cleaned, destination, indent=config.indent)
+=======
+import nbformat
+from typing import List, Any
+
+
+def _remove_empty_cells(cells: List[dict]) -> List[dict]:
+    """Remove cells that contain no source code or markdown text.
+
+    Empty cells are those where ``cell['source']`` is an empty string or only
+    whitespace. The function preserves the original order of the remaining
+    cells.
+    """
+    cleaned = []
+    for cell in cells:
+        source = cell.get("source", "")
+        if isinstance(source, str) and source.strip():
+            cleaned.append(cell)
+    return cleaned
+
+
+def _clean_metadata(notebook: dict) -> dict:
+    """Strip most top‑level metadata that is not required for execution.
+
+    The function removes ``kernelspec`` and ``language_info`` entries – they are
+    optional for a clean notebook and can cause unnecessary diffs when the
+    notebook is version‑controlled.
+    """
+    nb_copy = notebook.copy()
+    nb_copy.pop("metadata", None)  # Remove all metadata; a minimal set can be added later if needed
+    return nb_copy
+
+
+def clean_notebook(notebook_path: str, output_path: str | None = None) -> dict:
+    """Read a notebook, apply cleaning rules and optionally write the result.
+
+    Parameters
+    ----------
+    notebook_path:
+        Path to the input ``.ipynb`` file.
+    output_path:
+        If provided, the cleaned notebook is written to this location.  When
+        ``None`` the original file is overwritten.
+
+    Returns
+    -------
+    dict
+        The cleaned ``NotebookNode`` (as a plain ``dict`` for simplicity).
+    """
+    nb = nbformat.read(notebook_path, as_version=nbformat.NO_CONVERT)
+
+    # Apply cleaning steps
+    nb["cells"] = _remove_empty_cells(nb.get("cells", []))
+    nb = _clean_metadata(nb)
+
+    # Write back if requested
+    target = output_path if output_path is not None else notebook_path
+    nbformat.write(nb, target)
+    return nb
+>>>>>>> 2095700 (feat(cleaner): add notebook cleaning functionality)

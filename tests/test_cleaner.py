@@ -6,7 +6,6 @@ import tempfile
 from pathlib import Path
 import unittest
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
@@ -14,7 +13,6 @@ if str(SRC) not in sys.path:
 
 from ipynbcleaner.cli import main
 from ipynbcleaner.cleaner import CleanOptions, clean_notebook, clean_notebook_file
-
 
 SAMPLE_NOTEBOOK = {
     "nbformat": 4,
@@ -30,7 +28,7 @@ SAMPLE_NOTEBOOK = {
         {
             "cell_type": "code",
             "execution_count": 7,
-            "metadata": {"collapsed": False},
+            "metadata": {"collapsed": false},
             "source": ["print('hello')\n"],
             "outputs": [
                 {"output_type": "stream", "name": "stdout", "text": ["first\n"]},
@@ -40,7 +38,6 @@ SAMPLE_NOTEBOOK = {
         },
     ],
 }
-
 
 class CleanerTests(unittest.TestCase):
     def test_clean_notebook_removes_noise_and_keeps_last_output(self) -> None:
@@ -90,7 +87,6 @@ class CleanerTests(unittest.TestCase):
 
             self.assertEqual(exit_code, 0)
             self.assertTrue(output_file.exists())
-
 
 if __name__ == "__main__":
     unittest.main()

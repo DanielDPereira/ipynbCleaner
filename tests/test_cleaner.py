@@ -28,7 +28,7 @@ SAMPLE_NOTEBOOK = {
         {
             "cell_type": "code",
             "execution_count": 7,
-            "metadata": {"collapsed": false},
+            "metadata": {"collapsed": False},
             "source": ["print('hello')\n"],
             "outputs": [
                 {"output_type": "stream", "name": "stdout", "text": ["first\n"]},

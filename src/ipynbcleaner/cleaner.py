@@ -13,7 +13,7 @@ class NotebookCleanError(ValueError):
     """Raised when the notebook structure is invalid."""
 
 
-@dataclass(slots=True)
+@dataclass
 class CleanOptions:
     """Configuration for notebook cleaning."""
 

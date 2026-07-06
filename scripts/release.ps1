@@ -4,7 +4,7 @@
 $ErrorActionPreference = 'Stop'
 
 Write-Host "Running tests..."
-pytest -q
+python -m unittest discover -s tests
 
 Write-Host "Building package..."
 python -m build

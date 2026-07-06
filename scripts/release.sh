@@ -5,7 +5,7 @@ set -e
 
 # 1️⃣ Run tests
 echo "Running tests..."
-pytest -q
+python -m unittest discover -s tests
 
 # 2️⃣ Build distribution
 echo "Building package..."
